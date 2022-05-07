@@ -41,10 +41,11 @@
             this.load.image('star', 'assets/star.png');
             this.load.image('ls', 'assets/light_saber.png')
             this.load.image('bomb', 'assets/bomb.png');
-            this.load.spritesheet('gracz',
-                'assets/dude.png',
-                { frameWidth: 32, frameHeight: 48 }
-            );
+            this.load.atlas('luke', 'assets/luke_sprites.png','assets/luke_sprites.json',);
+            // this.load.spritesheet('gracz',
+            //     'assets/luke.png',
+            //     { frameWidth: 40, frameHeight: 35 }
+            // );
         }
 
         function create() {
@@ -57,34 +58,39 @@
             platforms.create(600, 400, 'ground');
             platforms.create(50, 250, 'ground');
             platforms.create(750, 220, 'ground');
+            // Create animations
+            this.anims.create({key: 'standing', frames: this.anims.generateFrameNames('luke', {prefix: 'standing', end:1, zeroPad:4}), repeat: -1});
+            this.anims.create({key: 'running', frames: this.anims.generateFrameNames('luke', {prefix: 'running', end:7, zeroPad:4}), repeat: -1});
+            this.anims.create({key: 'jumping', frames: this.anims.generateFrameNames('luke', {prefix: 'jumping', end:1, zeroPad:4}), repeat: 0});
 
-            player = this.physics.add.sprite(100, 450, 'gracz');
+            player = this.physics.add.sprite(150, 500, 'luke');
+            // powiekszenie postaci 
+            player.setScale(1.5);
             cursors = this.input.keyboard.createCursorKeys();
             scoreText = this.add.text(16, 16, 'score: 0', { fontSize: '32px', fill: '#000' });
             player.body.setGravityY(100)
-
             player.setBounce(0.4);
             player.setCollideWorldBounds(true);
 
-            this.anims.create({
-                key: 'left',
-                frames: this.anims.generateFrameNumbers('gracz', { start: 0, end: 3 }),
-                frameRate: 10,
-                repeat: -1
-            });
+            // this.anims.create({
+            //     key: 'left',
+            //     frames: this.anims.generateFrameNumbers('luke', { start: 0, end: 4 }),
+            //     frameRate: 10,
+            //     repeat: -1
+            // });
 
-            this.anims.create({
-                key: 'turn',
-                frames: [{ key: 'gracz', frame: 4 }],
-                frameRate: 20
-            });
+            // this.anims.create({
+            //     key: 'turn',
+            //     frames: [{ key: 'luke', frame: 4 }],
+            //     frameRate: 20
+            // });
 
-            this.anims.create({
-                key: 'right',
-                frames: this.anims.generateFrameNumbers('gracz', { start: 5, end: 8 }),
-                frameRate: 10,
-                repeat: -1
-            });
+            // this.anims.create({
+            //     key: 'right',
+            //     frames: this.anims.generateFrameNumbers('luke', { start: 6, end: 8 }),
+            //     frameRate: 10,
+            //     repeat: -1
+            // });
 
             ls = this.physics.add.group({
                 key: 'ls',
@@ -105,22 +111,28 @@
         function update() {
             if (cursors.left.isDown) {
                 player.setVelocityX(-160);
-
-                player.anims.play('left', true);
+                player.flipX = true;
+                if (player.body.touching.down){
+                player.anims.play('running', true);
+                }
             }
             else if (cursors.right.isDown) {
                 player.setVelocityX(160);
-
-                player.anims.play('right', true);
+                player.flipX = false;
+                if (player.body.touching.down){
+                player.anims.play('running', true);
+                }
             }
             else {
                 player.setVelocityX(0);
-
-                player.anims.play('turn');
+                if (player.body.touching.down){
+                player.anims.play('standing', true);
+                }
             }
 
             if (cursors.up.isDown && player.body.touching.down) {
-                player.setVelocityY(-500);
+                player.setVelocityY(-400);
+                player.play('jumping');
             }
         }
 
