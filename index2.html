@@ -25,6 +25,10 @@ var config = {
 
 var game = new Phaser.Game(config);
 
+var counter1 = 0;
+
+var counter2 = 0;
+
 function preload ()
 {
     this.load.image('eye', 'assets/star.png');
@@ -36,22 +40,19 @@ function create ()
 {
 
     const text = this.add.text(500, 250, '', { font: '16px Courier', fill: '#00ff00' });
-        const gem = this.add.image(550, 300, 'gem');
 
-        //  Store some data about this Gem:
-        gem.setDataEnabled();
-
-        gem.data.set('name', 'Red Gem Stone');
-        gem.data.set('level', 2);
-        gem.data.set('owner', 'Link');
-        gem.data.set('gold', 50);
-
-        text.setText([
-            'Name: ' + gem.data.get('name'),
-            'Level: ' + gem.data.get('level'),
-            'Value: ' + gem.data.get('gold') + ' gold',
-            'Owner: ' + gem.data.get('owner')
+    text.setText([
+        `Star Click Count: ${counter1}`,
+        `Bomb Click Count: ${counter2}`,
+        
         ]);
+
+      
+
+      
+
+
+
 
         
     var sprite = this.add.sprite(400, 300, 'eye').setInteractive();
@@ -59,6 +60,16 @@ function create ()
     sprite.on('pointerdown', function (pointer) {
 
         this.setTint(0xff0000);
+
+        counter1 +=1;
+        text.setText([
+        `Star Click Count: ${counter1}`,
+        `Bomb Click Count: ${counter2}`,
+        ]);
+
+
+
+      
 
     });
 
@@ -77,8 +88,13 @@ function create ()
     var sprite2 = this.add.sprite(300, 300, 'eye2').setInteractive();
 
     sprite2.on('pointerdown', function (pointer) {
-        gem.data.values.gold += 100;
         this.setTint(0xff0000);
+
+        counter2 +=1;
+        text.setText([
+        `Star Click Count: ${counter1}`,
+        `Bomb Click Count: ${counter2}`,
+        ]);
 
     });
 
