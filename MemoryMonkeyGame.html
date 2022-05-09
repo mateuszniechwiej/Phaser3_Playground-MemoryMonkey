@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Part 10</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+const config = {
+	type: Phaser.AUTO,
+	width: 2000,
+	height: 1800,
+	backgroundColor: "0",
+
+	scene: {
+    preload,
+    create,
+    //update
+	}
+}
+
+const game = new Phaser.Game(config)
+var image;
+//const data = require('./assets/numbers.json');
+//console.log(data);
+//const AtlasLenght = Object.keys(data).lenght;
+
+
+function preload() {
+    this.load.spritesheet('numbers', 'assets/Numbers.png', { frameWidth: 256, frameHeight: 256 });
+    this.load.atlas('numbers', 'assets/Numbers.png', 'assets/numbers.json');
+    
+
+}
+
+
+function create ()
+{
+    // this.anims.create({
+    //     frames: [ { key: 'numbers', frame: 4 } ],
+    // });
+        
+    //this.add.sprite(400, 300, 'sprite2');
+
+    var frames = ['sprite1', 'sprite2', 'sprite3', 'sprite4', 'sprite5', 'sprite6', 'sprite6', 'sprite7', 'sprite8', 'sprite9', 'spriteBlank',];
+    image = this.add.sprite(400, 300, );
+
+}
+
+</script>
+
+</body>
+</html>
