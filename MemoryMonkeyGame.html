@@ -24,18 +24,19 @@ const config = {
     preload,
     create,
     //update
+    antialias: true
 	}
 }
 
 const game = new Phaser.Game(config)
-var image;
+//var image;
 //const data = require('./assets/numbers.json');
 //console.log(data);
 //const AtlasLenght = Object.keys(data).lenght;
 
 
 function preload() {
-    this.load.spritesheet('numbers', 'assets/Numbers.png', { frameWidth: 256, frameHeight: 256 });
+    //this.load.spritesheet('numbers', 'assets/Numbers.png', { frameWidth: 256, frameHeight: 256 });
     this.load.atlas('numbers', 'assets/Numbers.png', 'assets/numbers.json');
     
 
@@ -50,8 +51,13 @@ function create ()
         
     //this.add.sprite(400, 300, 'sprite2');
 
-    var frames = ['sprite1', 'sprite2', 'sprite3', 'sprite4', 'sprite5', 'sprite6', 'sprite6', 'sprite7', 'sprite8', 'sprite9', 'spriteBlank',];
-    image = this.add.sprite(400, 300, );
+    //var frames = ['sprite1', 'sprite2', 'sprite3', 'sprite4', 'sprite5', 'sprite6', 'sprite6', 'sprite7', 'sprite8', 'sprite9', 'spriteBlank',];
+    //image = this.add.sprite(400, 300, );
+
+    sprite = this.add.image(400, 200, 'numbers', 'sprite3');
+    sprite.setScale(0.2);
+    this.add.image(400, 400, 'numbers', 'sprite5');
+    this.add.image(400, 600, 'numbers', 'sprite8');
 
 }
 
