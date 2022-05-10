@@ -32,7 +32,6 @@ const game = new Phaser.Game(config)
 var size = (0.4)
 
 
-
 function preload() {
     
     this.load.atlas('numbers', 'assets/Numbers.png', 'assets/numbers.json');
@@ -42,27 +41,38 @@ function preload() {
 
 function create ()
 {
-
-    sprite1 = this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive();
+    var step;
+for (step = 0; step < 5; step++) {
+  // Uruchamia się 5 razy, z wartościami od 0 do 4.
+  sprite1 = this.add.image(400, 200+(100*step), 'numbers', 'spriteBlank').setInteractive();
     sprite1.setScale(size);
-    sprite1.on('pointerdown', function (pointer) {
+    sprite1.on('pointerdown', function (pointer) 
+        {
         sprite1.setFrame('sprite1');
-    }
+        }
     );
+}
 
-    sprite2 = this.add.image(400, 400, 'numbers', 'spriteBlank').setInteractive();
-    sprite2.setScale(size);
-    sprite2.on('pointerdown', function (pointer) {
-    sprite2.setFrame('sprite2');
-    }
-    );
+    // sprite1 = this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive();
+    // sprite1.setScale(size);
+    // sprite1.on('pointerdown', function (pointer) {
+    //     sprite1.setFrame('sprite1');
+    // }
+    // );
 
-    sprite3 = this.add.image(400, 600, 'numbers', 'spriteBlank').setInteractive();
-    sprite3.setScale(size);
-    sprite3.on('pointerdown', function (pointer) {
-    sprite3.setFrame('sprite3');
-    }
-    );
+    // sprite2 = this.add.image(400, 400, 'numbers', 'spriteBlank').setInteractive();
+    // sprite2.setScale(size);
+    // sprite2.on('pointerdown', function (pointer) {
+    // sprite2.setFrame('sprite2');
+    // }
+    // );
+
+    // sprite3 = this.add.image(400, 600, 'numbers', 'spriteBlank').setInteractive();
+    // sprite3.setScale(size);
+    // sprite3.on('pointerdown', function (pointer) {
+    // sprite3.setFrame('sprite3');
+    // }
+    // );
     
 }
 
