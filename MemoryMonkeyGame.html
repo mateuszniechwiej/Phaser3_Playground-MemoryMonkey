@@ -38,37 +38,24 @@ function preload() {
 
 }
 
-//DUPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 function create ()
 {
     
     //var sprites =[];
-for (let step = 1; step < 6; step++) {
+for (let stepx = 1; stepx < 6; stepx++) {
+    for (let stepy = 1; stepy < 6; stepy++) {
   // Uruchamia się 5 razy, z wartościami od 0 do 4.
-  const sprite1 = this.add.image(step*110, 200, 'numbers', 'spriteBlank').setInteractive();
+  const sprite1 = this.add.image((stepx*110)+100, (stepy*110)+100, 'numbers', 'spriteBlank').setInteractive();
     sprite1.setScale(size);
     sprite1.on('pointerdown', function (pointer) {
-        sprite1.setFrame('sprite' +step);
+        sprite1.setFrame('sprite' +(stepx^stepy));
     }
+    
     );
   
-//    eval('var sprite' + step + '= ' + this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive());
-//    sprites.push(eval('sprite'+step));
-//    console.log(sprites[step]);
-
-
-
-
-   
-//    eval('var sprite' + step).setScale(size);
-//    eval('var sprite' + step).on('pointerdown', function (pointer)
-//          {
-//              eval(('var sprite' + step).setFrame('sprite1')
-//             );
-//          });
-
 }
-//console.log(sprites);
+}
 
     // sprite1 = this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive();
     // sprite1.setScale(size);
