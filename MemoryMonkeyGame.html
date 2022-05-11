@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <title>Making your first Phaser 3 Game - Part 10</title>
@@ -10,90 +11,83 @@
         }
     </style>
 </head>
+
 <body>
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
-const config = {
-	type: Phaser.AUTO,
-	width: 2000,
-	height: 1800,
-	backgroundColor: "0",
+        const config = {
+            type: Phaser.AUTO,
+            width: 2000,
+            height: 1800,
+            backgroundColor: "0",
 
-	scene: {
-    preload,
-    create,
-    //update
-   
-	}
-}
+            scene: {
+                preload,
+                create,
+                //update
 
-const game = new Phaser.Game(config)
-var size = (0.4)
+            }
+        }
 
-
-function preload() {
-    
-    this.load.atlas('numbers', 'assets/Numbers.png', 'assets/numbers.json');
-
-}
-
-//DUPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-function create ()
-{
-    
-    //var sprites =[];
-for (let step = 1; step < 6; step++) {
-  // Uruchamia się 5 razy, z wartościami od 0 do 4.
-  const sprite1 = this.add.image(step*110, 200, 'numbers', 'spriteBlank').setInteractive();
-    sprite1.setScale(size);
-    sprite1.on('pointerdown', function (pointer) {
-        sprite1.setFrame('sprite' +step);
-    }
-    );
-  
-//    eval('var sprite' + step + '= ' + this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive());
-//    sprites.push(eval('sprite'+step));
-//    console.log(sprites[step]);
+        const game = new Phaser.Game(config)
+        var size = (0.4)
 
 
+        function preload() {
+
+            this.load.atlas('numbers', 'assets/Numbers.png', 'assets/numbers.json');
+
+        }
+
+        //DUPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        function create() {
+            let sprites = [];
+            for (let step = 0; step < 5; step++) {
+                // Uruchamia się 5 razy, z wartościami od 0 do 4.
+                sprites[step] = this.add.image(400, 200 + (100 * step), 'numbers', `spriteBlank`).setInteractive();
+                sprites[step].setScale(size);
+                sprites[step].on('pointerdown', function (pointer) {
+                    sprites[step].setFrame(`sprite${step+1}`);
+                })
+                    //    eval('var sprite' + step).setScale(size);
+                    //    eval('var sprite' + step).on('pointerdown', function (pointer)
+                    //          {
+                    //              eval(('var sprite' + step).setFrame('sprite1')
+                    //             );
+                    //          });
+                }
+                console.log(sprites);
+            }
+
+            
 
 
-   
-//    eval('var sprite' + step).setScale(size);
-//    eval('var sprite' + step).on('pointerdown', function (pointer)
-//          {
-//              eval(('var sprite' + step).setFrame('sprite1')
-//             );
-//          });
 
-}
-//console.log(sprites);
+            // sprite1 = this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive();
+            // sprite1.setScale(size);
+            // sprite1.on('pointerdown', function (pointer) {
+            //     sprite1.setFrame('sprite1');
+            // }
+            // );
 
-    // sprite1 = this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive();
-    // sprite1.setScale(size);
-    // sprite1.on('pointerdown', function (pointer) {
-    //     sprite1.setFrame('sprite1');
-    // }
-    // );
+            // sprite2 = this.add.image(400, 400, 'numbers', 'spriteBlank').setInteractive();
+            // sprite2.setScale(size);
+            // sprite2.on('pointerdown', function (pointer) {
+            // sprite2.setFrame('sprite2');
+            // }
+            // );
 
-    // sprite2 = this.add.image(400, 400, 'numbers', 'spriteBlank').setInteractive();
-    // sprite2.setScale(size);
-    // sprite2.on('pointerdown', function (pointer) {
-    // sprite2.setFrame('sprite2');
-    // }
-    // );
+            // sprite3 = this.add.image(400, 600, 'numbers', 'spriteBlank').setInteractive();
+            // sprite3.setScale(size);
+            // sprite3.on('pointerdown', function (pointer) {
+            // sprite3.setFrame('sprite3');
+            // }
+            // );
 
-    // sprite3 = this.add.image(400, 600, 'numbers', 'spriteBlank').setInteractive();
-    // sprite3.setScale(size);
-    // sprite3.on('pointerdown', function (pointer) {
-    // sprite3.setFrame('sprite3');
-    // }
-    // );
-    
-}
 
-</script>
+    </script>
 
 </body>
+
 </html>
