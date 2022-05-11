@@ -44,30 +44,43 @@
         function create() {
             let sprites = [];
             let blank = true;
+            //array na przechwywanie liczb
+            var uniqueRandoms = [];
+            // ilosc losowych liczb
+            var numRandoms = 5;
+            // funkcja losowych liczb od 1-5 
+            function makeUniqueRandom() {
+                if (!uniqueRandoms.length) {
+                    for (var i = 0; i < numRandoms; i++) {
+                        uniqueRandoms.push(i);
+                    }
+                }
+                var index = Math.floor(Math.random() * uniqueRandoms.length);
+                var val = uniqueRandoms[index];
+
+                // usuwanie tej liczby ktora juz byla by sie nie powalilo
+                uniqueRandoms.splice(index, 1);
+                return val;
+
+            }
             for (let step = 0; step < 5; step++) {
                 // Uruchamia się 5 razy, z wartościami od 1 do 5.
-                sprites[step] = this.add.image(400, 200 + (100 * step), 'numbers', `spriteBlank`).setInteractive();
+                sprites[step] = this.add.image(400, 200 + (100 * makeUniqueRandom()), 'numbers', `spriteBlank`).setInteractive();
                 sprites[step].setScale(size);
                 sprites[step].on('pointerdown', function (pointer) {
-                    if(blank ===true) {
-                    sprites[step].setFrame(`sprite${step+1}`);
-                    blank = false;
+                    if (blank === true) {
+                        sprites[step].setFrame(`sprite${step + 1}`);
+                        blank = false;
                     } else {
                         sprites[step].setFrame(`spriteBlank`);
                         blank = true;
                     }
                 })
-                    //    eval('var sprite' + step).setScale(size);
-                    //    eval('var sprite' + step).on('pointerdown', function (pointer)
-                    //          {
-                    //              eval(('var sprite' + step).setFrame('sprite1')
-                    //             );
-                    //          });
-                }
-                console.log(sprites);
             }
+            console.log(sprites);
+        }
 
-            
+
 
 
 
