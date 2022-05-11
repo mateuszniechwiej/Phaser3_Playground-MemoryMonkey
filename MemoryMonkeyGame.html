@@ -43,12 +43,19 @@
         //DUPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         function create() {
             let sprites = [];
+            let blank = true;
             for (let step = 0; step < 5; step++) {
-                // Uruchamia się 5 razy, z wartościami od 0 do 4.
+                // Uruchamia się 5 razy, z wartościami od 1 do 5.
                 sprites[step] = this.add.image(400, 200 + (100 * step), 'numbers', `spriteBlank`).setInteractive();
                 sprites[step].setScale(size);
                 sprites[step].on('pointerdown', function (pointer) {
+                    if(blank ===true) {
                     sprites[step].setFrame(`sprite${step+1}`);
+                    blank = false;
+                    } else {
+                        sprites[step].setFrame(`spriteBlank`);
+                        blank = true;
+                    }
                 })
                     //    eval('var sprite' + step).setScale(size);
                     //    eval('var sprite' + step).on('pointerdown', function (pointer)
