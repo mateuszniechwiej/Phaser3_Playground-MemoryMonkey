@@ -41,17 +41,34 @@ function preload() {
 //DUPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 function create ()
 {
-    var step;
-for (step = 0; step < 5; step++) {
+    
+    //var sprites =[];
+for (let step = 1; step < 6; step++) {
   // Uruchamia się 5 razy, z wartościami od 0 do 4.
-  sprite1 = this.add.image(400, 200+(100*step), 'numbers', 'spriteBlank').setInteractive();
+  const sprite1 = this.add.image(step*110, 200, 'numbers', 'spriteBlank').setInteractive();
     sprite1.setScale(size);
-    sprite1.on('pointerdown', function (pointer) 
-        {
-        sprite1.setFrame('sprite1');
-        }
+    sprite1.on('pointerdown', function (pointer) {
+        sprite1.setFrame('sprite' +step);
+    }
     );
+  
+//    eval('var sprite' + step + '= ' + this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive());
+//    sprites.push(eval('sprite'+step));
+//    console.log(sprites[step]);
+
+
+
+
+   
+//    eval('var sprite' + step).setScale(size);
+//    eval('var sprite' + step).on('pointerdown', function (pointer)
+//          {
+//              eval(('var sprite' + step).setFrame('sprite1')
+//             );
+//          });
+
 }
+//console.log(sprites);
 
     // sprite1 = this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive();
     // sprite1.setScale(size);
