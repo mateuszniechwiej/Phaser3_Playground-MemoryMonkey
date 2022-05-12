@@ -43,11 +43,10 @@
         //DUPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         function create() {
             let sprites = [];
-            let blank = true;
             //array na przechwywanie liczb
             var uniqueRandoms = [];
             // ilosc losowych liczb
-            var numRandoms = 5;
+            var numRandoms = 1;
             // funkcja losowych liczb od 1-5 
             function makeUniqueRandom() {
                 if (!uniqueRandoms.length) {
@@ -63,9 +62,44 @@
                 return val;
 
             }
+            // array x i array y zapisane w 1 array-u o nazwie coords (tzw nested arrays
+            let coords = [[], []];
+            const x = 0;
+            const y = 1;
+
+            /*
+            Generate X coords
+            */
+            for (let i = 100; i < 600; i += 110) {
+             coords[x].push(i);
+            }
+
+            /*
+            Generate Y coords
+            */
+            for (let i = 100; i < 900; i += 110) {
+            coords[y].push(i);
+            }
+            // funkcja mieszajaca kolejnoscia indexow w array-x i arrayu -y
+            function shuffle () {
+            return coords[0].sort(() => Math.random() - 0.5),
+            coords[1].sort(() => Math.random() - 0.5);
+            }
+            //
+            // let randomCords;
+            // for (i=0;i<coords[0].length;i++) {
+            //     for(j=0;j<coords[1].length;j++) {
+            //         randomCords =coords[i][j]
+            //     }
+            // }
             for (let step = 0; step < 9; step++) {
-                let xx = Phaser.Math.Between(game.config.width*.1,game.config.width*.9);
-                let yy = Phaser.Math.Between(game.config.height*.1,game.config.height*.9);
+                let blank = true;
+                // przy kazdym loopie odpalamy funkcje mieszajaca kordynatami(i tu musimy wyelinowac powtorki lub wewnatrz funcji shufle)
+                shuffle();
+                // lekko zamieszane kordynaty xx jest yy (ale dziala)
+                let yy = coords[0][0];
+                let xx = coords[1][0];
+                // let yy = Phaser.Math.Between(game.config.height*.1,game.config.height*.9);
                 sprites[step] = this.add.image(xx, yy, 'numbers', `spriteBlank`).setInteractive();
                 sprites[step].setScale(size);
                 sprites[step].on('pointerdown', function (pointer) {
