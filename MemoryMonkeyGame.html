@@ -39,8 +39,6 @@
             this.load.atlas('numbers', 'assets/Numbers.png', 'assets/numbers.json');
 
         }
-
-        //DUPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         function create() {
             let sprites = [];
             //array na przechwywanie liczb
@@ -100,7 +98,7 @@
                 let yy = allY[0];// pierwszy y z listy
                 let pairXY = [xx, yy]
                 // jesli lista jest pusta lub funckcja daje bool false(czyli nie sa takie same)
-                if (allCoordsPairs.length === 0 || !isArrayInArray(allCoordsPairs,pairXY)) {
+                if (allCoordsPairs.length === 0 || !isArrayInArray(allCoordsPairs, pairXY)) {
                     allCoordsPairs.push(pairXY)// dodjemy kordynaty do listy
                 } else {
                     shuffle() // jak nie losujemy numery jeszcze raz
@@ -124,8 +122,12 @@
                 // lekko zamieszane kordynaty xx jest yy (ale dziala)
                 let yy = coords[0][0];
                 let xx = coords[1][0];
+                sprites[step] = this.add.image(xx, yy, 'numbers', `sprite${step+1}`).setInteractive();
+                setTimeout(function () {
+                    sprites[step].setFrame(`spriteBlank`);
+                }, 2000);
                 // let yy = Phaser.Math.Between(game.config.height*.1,game.config.height*.9);
-                sprites[step] = this.add.image(xx, yy, 'numbers', `spriteBlank`).setInteractive();
+                
                 sprites[step].setScale(size);
                 sprites[step].on('pointerdown', function (pointer) {
                     if (blank === true) {
