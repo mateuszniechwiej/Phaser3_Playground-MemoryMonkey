@@ -18,7 +18,7 @@
 
         const config = {
             type: Phaser.AUTO,
-            width: window.innerWidth * window.devicePixelRatio ,
+            width: window.innerWidth * window.devicePixelRatio,
             height: window.innerHeight * window.devicePixelRatio,
             backgroundColor: "0",
 
@@ -71,20 +71,45 @@
             Generate X coords
             */
             for (let i = 100; i < 600; i += 110) {
-             coords[x].push(i);
+                coords[x].push(i);
             }
 
             /*
             Generate Y coords
             */
             for (let i = 100; i < 900; i += 110) {
-            coords[y].push(i);
+                coords[y].push(i);
+            }
+            let allCoordsPairs = [];
+            // funkcja poròwnujaca dodajce kordynaty 
+            function isArrayInArray(arr, arr2) {
+                let array2_as_string = JSON.stringify(arr2); // zamieniamy liste na string by latwiej prownać z gòwna lista allCoordsPairs
+
+                let contains = arr.some(function (same) {
+                    return JSON.stringify(same) === array2_as_string;// sprawdzamy czy sa takie same
+                });
+                console.log(contains)
+                return contains;// oddajemy bool true lub false
             }
             // funkcja mieszajaca kolejnoscia indexow w array-x i arrayu -y
-            function shuffle () {
-            return coords[0].sort(() => Math.random() - 0.5),
-            coords[1].sort(() => Math.random() - 0.5);
+            function shuffle() {
+
+                let allX = coords[0].sort(() => Math.random() - 0.5); // losowe ustawienie X-òw
+                let allY = coords[1].sort(() => Math.random() - 0.5); // losowe ustawienie Y-òw
+                let xx = allX[0];// pierwszy x z listy
+                let yy = allY[0];// pierwszy y z listy
+                let pairXY = [xx, yy]
+                // jesli lista jest pusta lub funckcja daje bool false(czyli nie sa takie same)
+                if (allCoordsPairs.length === 0 || !isArrayInArray(allCoordsPairs,pairXY)) {
+                    allCoordsPairs.push(pairXY)// dodjemy kordynaty do listy
+                } else {
+                    shuffle() // jak nie losujemy numery jeszcze raz
+                }
+                console.log(pairXY);
+                return xx, yy; // i w wyniku tej funcji dostajemy nowe kordynaty x i y
+
             }
+
             //
             // let randomCords;
             // for (i=0;i<coords[0].length;i++) {
