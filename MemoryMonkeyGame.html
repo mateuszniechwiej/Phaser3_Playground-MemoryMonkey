@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 10</title>
+    <title>Memory Monkey Game</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
         body {
@@ -41,26 +41,7 @@
         }
         function create() {
             let sprites = [];
-            //array na przechwywanie liczb
-            var uniqueRandoms = [];
-            // ilosc losowych liczb
-            var numRandoms = 1;
-            // funkcja losowych liczb od 1-5 
-            function makeUniqueRandom() {
-                if (!uniqueRandoms.length) {
-                    for (var i = 0; i < numRandoms; i++) {
-                        uniqueRandoms.push(i);
-                    }
-                }
-                var index = Math.floor(Math.random() * uniqueRandoms.length);
-                var val = uniqueRandoms[index];
-
-                // usuwanie tej liczby ktora juz byla by sie nie powalilo
-                uniqueRandoms.splice(index, 1);
-                return val;
-
-            }
-            // array x i array y zapisane w 1 array-u o nazwie coords (tzw nested arrays
+            // array x i array y zapisane w 1 array-u o nazwie coords (tzw nested arrays)
             let coords = [[], []];
             const x = 0;
             const y = 1;
@@ -68,14 +49,14 @@
             /*
             Generate X coords
             */
-            for (let i = 100; i < 600; i += 110) {
+            for (let i = 100; i < 900; i += 110) {
                 coords[x].push(i);
             }
 
             /*
             Generate Y coords
             */
-            for (let i = 100; i < 900; i += 110) {
+            for (let i = 100; i < 600; i += 110) {
                 coords[y].push(i);
             }
             let allCoordsPairs = [];
@@ -94,39 +75,34 @@
 
                 let allX = coords[0].sort(() => Math.random() - 0.5); // losowe ustawienie X-òw
                 let allY = coords[1].sort(() => Math.random() - 0.5); // losowe ustawienie Y-òw
-                let xx = allX[0];// pierwszy x z listy
-                let yy = allY[0];// pierwszy y z listy
-                let pairXY = [xx, yy]
+                let drawnX = allX[0];// pierwszy x z listy
+                let drawnY = allY[0];// pierwszy y z listy
+                let pairXY = [drawnX, drawnY]
                 // jesli lista jest pusta lub funckcja daje bool false(czyli nie sa takie same)
                 if (allCoordsPairs.length === 0 || !isArrayInArray(allCoordsPairs, pairXY)) {
                     allCoordsPairs.push(pairXY)// dodjemy kordynaty do listy
                 } else {
                     shuffle() // jak nie losujemy numery jeszcze raz
                 }
-                console.log(pairXY);
-                return xx, yy; // i w wyniku tej funcji dostajemy nowe kordynaty x i y
+                console.log(`allCordsPairs: ${allCoordsPairs}`);
+                return drawnX, drawnY; // i w wyniku tej funcji dostajemy nowe kordynaty x i y
 
             }
 
-            //
-            // let randomCords;
-            // for (i=0;i<coords[0].length;i++) {
-            //     for(j=0;j<coords[1].length;j++) {
-            //         randomCords =coords[i][j]
-            //     }
-            // }
             for (let step = 0; step < 9; step++) {
                 let blank = true;
-                // przy kazdym loopie odpalamy funkcje mieszajaca kordynatami(i tu musimy wyelinowac powtorki lub wewnatrz funcji shufle)
+                // przy kazdym loopie odpalamy funkcje mieszajaca)
                 shuffle();
-                // lekko zamieszane kordynaty xx jest yy (ale dziala)
-                let yy = coords[0][0];
-                let xx = coords[1][0];
+                // l
+                let xx = coords[0][0];
+                let yy = coords[1][0];
                 sprites[step] = this.add.image(xx, yy, 'numbers', `sprite${step+1}`).setInteractive();
-                setTimeout(function () {
-                    sprites[step].setFrame(`spriteBlank`);
-                }, 2000);
-                // let yy = Phaser.Math.Between(game.config.height*.1,game.config.height*.9);
+                this.time.addEvent({
+                    delay:2000,
+                    callback: () => {
+                        sprites[step].setFrame(`spriteBlank`)
+                    }
+                });
                 
                 sprites[step].setScale(size);
                 sprites[step].on('pointerdown', function (pointer) {
@@ -141,33 +117,6 @@
             }
             console.log(sprites);
         }
-
-
-
-
-
-            // sprite1 = this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive();
-            // sprite1.setScale(size);
-            // sprite1.on('pointerdown', function (pointer) {
-            //     sprite1.setFrame('sprite1');
-            // }
-            // );
-
-            // sprite2 = this.add.image(400, 400, 'numbers', 'spriteBlank').setInteractive();
-            // sprite2.setScale(size);
-            // sprite2.on('pointerdown', function (pointer) {
-            // sprite2.setFrame('sprite2');
-            // }
-            // );
-
-            // sprite3 = this.add.image(400, 600, 'numbers', 'spriteBlank').setInteractive();
-            // sprite3.setScale(size);
-            // sprite3.on('pointerdown', function (pointer) {
-            // sprite3.setFrame('sprite3');
-            // }
-            // );
-
-
     </script>
 
 </body>
