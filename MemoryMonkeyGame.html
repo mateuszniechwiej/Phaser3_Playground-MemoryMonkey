@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8" />
-    <title>Making your first Phaser 3 Game - Part 10</title>
+    <title>Memory Monkey Game</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <style type="text/css">
         body {
@@ -18,8 +18,8 @@
 
         const config = {
             type: Phaser.AUTO,
-            width: 2000,
-            height: 1800,
+            width: window.innerWidth * window.devicePixelRatio,
+            height: window.innerHeight * window.devicePixelRatio,
             backgroundColor: "0",
 
             scene: {
@@ -39,33 +39,71 @@
             this.load.atlas('numbers', 'assets/Numbers.png', 'assets/numbers.json');
 
         }
-
-        //DUPA!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         function create() {
             let sprites = [];
-            let blank = true;
-            //array na przechwywanie liczb
-            var uniqueRandoms = [];
-            // ilosc losowych liczb
-            var numRandoms = 5;
-            // funkcja losowych liczb od 1-5 
-            function makeUniqueRandom() {
-                if (!uniqueRandoms.length) {
-                    for (var i = 0; i < numRandoms; i++) {
-                        uniqueRandoms.push(i);
-                    }
-                }
-                var index = Math.floor(Math.random() * uniqueRandoms.length);
-                var val = uniqueRandoms[index];
+            // array x i array y zapisane w 1 array-u o nazwie coords (tzw nested arrays)
+            let coords = [[], []];
+            const x = 0;
+            const y = 1;
 
-                // usuwanie tej liczby ktora juz byla by sie nie powalilo
-                uniqueRandoms.splice(index, 1);
-                return val;
+            /*
+            Generate X coords
+            */
+            for (let i = 100; i < 900; i += 110) {
+                coords[x].push(i);
+            }
+
+            /*
+            Generate Y coords
+            */
+            for (let i = 100; i < 600; i += 110) {
+                coords[y].push(i);
+            }
+            let allCoordsPairs = [];
+            // funkcja poròwnujaca dodajce kordynaty 
+            function isArrayInArray(arr, arr2) {
+                let array2_as_string = JSON.stringify(arr2); // zamieniamy liste na string by latwiej prownać z gòwna lista allCoordsPairs
+
+                let contains = arr.some(function (same) {
+                    return JSON.stringify(same) === array2_as_string;// sprawdzamy czy sa takie same
+                });
+                console.log(contains)
+                return contains;// oddajemy bool true lub false
+            }
+            // funkcja mieszajaca kolejnoscia indexow w array-x i arrayu -y
+            function shuffle() {
+
+                let allX = coords[0].sort(() => Math.random() - 0.5); // losowe ustawienie X-òw
+                let allY = coords[1].sort(() => Math.random() - 0.5); // losowe ustawienie Y-òw
+                let drawnX = allX[0];// pierwszy x z listy
+                let drawnY = allY[0];// pierwszy y z listy
+                let pairXY = [drawnX, drawnY]
+                // jesli lista jest pusta lub funckcja daje bool false(czyli nie sa takie same)
+                if (allCoordsPairs.length === 0 || !isArrayInArray(allCoordsPairs, pairXY)) {
+                    allCoordsPairs.push(pairXY)// dodjemy kordynaty do listy
+                } else {
+                    shuffle() // jak nie losujemy numery jeszcze raz
+                }
+                console.log(`allCordsPairs: ${allCoordsPairs}`);
+                return drawnX, drawnY; // i w wyniku tej funcji dostajemy nowe kordynaty x i y
 
             }
-            for (let step = 0; step < 5; step++) {
-                // Uruchamia się 5 razy, z wartościami od 1 do 5.
-                sprites[step] = this.add.image(400, 200 + (100 * makeUniqueRandom()), 'numbers', `spriteBlank`).setInteractive();
+
+            for (let step = 0; step < 9; step++) {
+                let blank = true;
+                // przy kazdym loopie odpalamy funkcje mieszajaca)
+                shuffle();
+                // l
+                let xx = coords[0][0];
+                let yy = coords[1][0];
+                sprites[step] = this.add.image(xx, yy, 'numbers', `sprite${step+1}`).setInteractive();
+                this.time.addEvent({
+                    delay:2000,
+                    callback: () => {
+                        sprites[step].setFrame(`spriteBlank`)
+                    }
+                });
+                
                 sprites[step].setScale(size);
                 sprites[step].on('pointerdown', function (pointer) {
                     if (blank === true) {
@@ -79,33 +117,6 @@
             }
             console.log(sprites);
         }
-
-
-
-
-
-            // sprite1 = this.add.image(400, 200, 'numbers', 'spriteBlank').setInteractive();
-            // sprite1.setScale(size);
-            // sprite1.on('pointerdown', function (pointer) {
-            //     sprite1.setFrame('sprite1');
-            // }
-            // );
-
-            // sprite2 = this.add.image(400, 400, 'numbers', 'spriteBlank').setInteractive();
-            // sprite2.setScale(size);
-            // sprite2.on('pointerdown', function (pointer) {
-            // sprite2.setFrame('sprite2');
-            // }
-            // );
-
-            // sprite3 = this.add.image(400, 600, 'numbers', 'spriteBlank').setInteractive();
-            // sprite3.setScale(size);
-            // sprite3.on('pointerdown', function (pointer) {
-            // sprite3.setFrame('sprite3');
-            // }
-            // );
-
-
     </script>
 
 </body>
