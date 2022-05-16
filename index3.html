@@ -1,0 +1,146 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Part 10</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+const config = {
+	type: Phaser.AUTO,
+	width: 400,
+	height: 500,
+	backgroundColor: "#5f2a55",
+    physics: {
+        default: 'arcade',
+        arcade: {
+            gravity: { y: 0 },
+            debug: false
+        }
+    },
+	scene: {
+    preload,
+    create,
+    update
+	}
+}
+
+
+const gameState = {}
+
+var player;
+var bomb;
+var counter = 0;
+var text2;
+var timedEvent;
+
+function preload() {
+  this.load.image('gracz', 'https://content.codecademy.com/courses/learn-phaser/codey.png');
+  this.load.image('bomb', 'assets/bomb.png');
+}
+
+
+function create() {
+
+    const text = this.add.text(0, 0, '', { font: '16px Courier', fill: '#00ff00' });
+    this.initialTime = 5;
+
+    text2 = this.add.text(15, 15, 'Countdown: ' + formatTime(this.initialTime), { font: '16px Courier', fill: '#00ff00' });
+
+    // Each 1000 ms call onEvent
+    timedEvent = this.time.addEvent({ delay: 1000, callback: onEvent, callbackScope: this, loop: true });
+    text.setText([
+    `Bomb Count: ${counter}`,
+    
+    ]);
+
+    function formatTime(seconds){
+    // Minutes
+    var minutes = Math.floor(seconds/60);
+    // Seconds
+    var partInSeconds = seconds%60;
+    // Adds left zeros to seconds
+    partInSeconds = partInSeconds.toString().padStart(2,'0');
+    // Returns formated time
+    return `${minutes}:${partInSeconds}`;
+}
+
+
+    function onEvent ()
+    {
+        this.initialTime -= 1; // One second
+        text2.setText('Countdown: ' + formatTime(this.initialTime));
+        
+    }
+
+    console.log(text)
+
+    player = this.physics.add.sprite(300, 450, 'gracz');
+
+    bomb = this.physics.add.sprite(100, 300, 'bomb')
+
+    this.physics.add.overlap(player, bomb, bombcollect, null, this);
+
+    gameState.cursors = this.input.keyboard.createCursorKeys();
+
+ 
+  function bombcollect(player, bomb)
+
+{
+    var x=Phaser.Math.Between(0,400)
+    var y=Phaser.Math.Between(0,400)
+
+    bomb.setPosition(x, y);
+
+
+
+    counter +=1;
+        text.setText([
+        `Bomb Count: ${counter}`
+        
+        ]);
+
+}
+  
+
+}
+
+
+function update() {
+
+  // Update based on keypress here!
+ if (gameState.cursors.left.isDown) {
+    // move the circle left!
+    player.x -= 3;
+  }
+  if (gameState.cursors.right.isDown) {
+    // move the circle left!
+    player.x -= -3;
+  }
+  if (gameState.cursors.up.isDown) {
+    // move the circle left!
+    player.y -= 3;
+  }
+  if (gameState.cursors.down.isDown) {
+    // move the circle left!
+    player.y -= -3;
+  }
+
+}
+
+
+
+const game = new Phaser.Game(config)
+
+</script>
+
+</body>
+</html>

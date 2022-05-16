@@ -1,0 +1,128 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+    <meta charset="UTF-8" />
+    <title>Making your first Phaser 3 Game - Part 10</title>
+    <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+
+<script type="text/javascript">
+
+var config = {
+    type: Phaser.WEBGL,
+    parent: 'phaser-example',
+    scene: {
+        preload: preload,
+        create: create
+    }
+};
+
+var game = new Phaser.Game(config);
+
+var counter1 = 0;
+
+var counter2 = 0;
+
+function preload ()
+{
+    this.load.image('eye', 'assets/star.png');
+    this.load.image('eye2', 'assets/bomb.png');
+
+}
+
+function create ()
+{
+
+    const text = this.add.text(500, 250, '', { font: '16px Courier', fill: '#00ff00' });
+
+    text.setText([
+        `Star Click Count: ${counter1}`,
+        `Bomb Click Count: ${counter2}`,
+        
+        ]);
+
+        
+
+    
+
+        
+    var sprite = this.add.sprite(400, 300, 'eye').setInteractive();
+
+    sprite.on('pointerdown', function (pointer) {
+
+        this.setTint(0xff0000);
+
+        counter1 +=1;
+        text.setText([
+        `Star Click Count: ${counter1}`,
+        `Bomb Click Count: ${counter2}`,
+        ]);
+
+
+
+      
+
+
+      
+
+    });
+
+    sprite.on('pointerout', function (pointer) {
+
+        this.clearTint();
+
+    });
+
+    sprite.on('pointerup', function (pointer) {
+
+        this.clearTint();
+
+    });
+
+    var sprite2 = this.add.sprite(300, 300, 'eye2').setInteractive();
+
+    sprite2.on('pointerdown', function (pointer) {
+        this.setTint(0xff0000);
+
+        counter2 +=1;
+        text.setText([
+        `Star Click Count: ${counter1}`,
+        `Bomb Click Count: ${counter2}`,
+        ]);
+
+    });
+
+    sprite2.on('pointerout', function (pointer) {
+
+        this.clearTint();
+
+    });
+
+    sprite2.on('pointerup', function (pointer) {
+
+        this.clearTint();
+
+    });
+
+
+
+    
+
+     
+       
+    
+
+      
+}
+
+
+</script>
+
+</body>
+</html>
