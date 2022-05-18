@@ -25,7 +25,9 @@ function preload() {
     this.load.atlas('numbers', 'assets/Numbers.png', 'assets/numbers.json');
 
 }
+
 function create() {
+    checkUserData();
     let sprites = [];
     // array x i array y zapisane w 1 array-u o nazwie coords (tzw nested arrays)
     let coords = [[], []];
