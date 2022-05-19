@@ -17,7 +17,7 @@ const config = {
 }
 
 const game = new Phaser.Game(config)
-var size = (0.4)
+var size = (0.4);
 
 
 function preload() {
@@ -27,7 +27,7 @@ function preload() {
 }
 
 function create() {
-    checkUserData();
+    // checkUserData();
     let sprites = [];
     // array x i array y zapisane w 1 array-u o nazwie coords (tzw nested arrays)
     let coords = [[], []];
@@ -78,30 +78,54 @@ function create() {
     }
 
     for (let step = 0; step < 9; step++) {
-        let blank = true;
         // przy kazdym loopie odpalamy funkcje mieszajaca)
         shuffle();
         // l
         let xx = coords[0][0];
         let yy = coords[1][0];
         sprites[step] = this.add.image(xx, yy, 'numbers', `sprite${step+1}`).setInteractive();
+        sprites[step].id = step+1;
         this.time.addEvent({
             delay:2000,
             callback: () => {
-                sprites[step].setFrame(`spriteBlank`)
+                sprites[step].setFrame(`spriteBlank`);
             }
         });
-        
         sprites[step].setScale(size);
-        sprites[step].on('pointerdown', function (pointer) {
-            if (blank === true) {
-                sprites[step].setFrame(`sprite${step + 1}`);
-                blank = false;
-            } else {
-                sprites[step].setFrame(`spriteBlank`);
-                blank = true;
-            }
-        })
     }
-    console.log(sprites);
-}
+    // dodawanie click event by odkrywac karty w odpwoiedzniej kolejności jak nie to game over
+    let index =1;
+    console.log(sprites[0]);
+    sprites.forEach(function (sprite){
+        sprite.on('pointerdown', function (pointer){
+            if(sprite.id === index) {
+                sprite.setFrame(`sprite${index}`);
+                index +=1;
+            } else {
+                alert('Game Over');
+            }
+        });
+    });
+    // for (let i=0;sprites.length; i++) {
+    //     console.log(sprites[i]);
+    //     sprites[i].on('pointerdown', function (pointer) {
+    //         let index =1;
+    //         if(sprites[i].id === index) {
+    //             sprites[i].setFrame(`sprite${i + 1}`);
+    //             index +=1;
+    //         } else {
+    //             alert('Game Over');
+    //         }
+    //     });
+    }
+    // let id = step+1;
+        
+    //     sprites[step].on('pointerdown', function (pointer) {
+    //         if (sprites[step].id === step+1){
+    //             sprites[step].setFrame(`sprite${step + 1}`);
+    //             id +=1;
+    //         } else {
+    //             sprites[step].setFrame(`spriteBlank`);
+    //             blank = true;
+    //         }
+    //     });
