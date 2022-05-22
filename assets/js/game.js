@@ -31,14 +31,14 @@ function create() {
     /*
     Generate X coords
     */
-    for (let i = 100; i < 900; i += 110) {
+    for (let i = 300; i < 1100; i += 110) {
         coords[x].push(i);
     }
 
     /*
     Generate Y coords
     */
-    for (let i = 100; i < 600; i += 110) {
+    for (let i = 200; i < 700; i += 110) {
         coords[y].push(i);
     }
     let allCoordsPairs = [];
