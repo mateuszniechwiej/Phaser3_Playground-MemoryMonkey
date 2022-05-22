@@ -94,16 +94,27 @@ function create() {
     }
     // dodawanie click event by odkrywac karty w odpwiedzniej kolejności jak nie to game over
     let index = 1;
-    console.log(sprites[0]);
-    sprites.forEach(function (sprite) {
-        sprite.on("pointerdown", function (pointer) {
-            if (sprite.id === index) {
-                sprite.destroy();
-                index += 1;
-            } else {
-                alert("Game Over");
-            }
+    // funkcja opózniajaca dzialanie w JS
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+        sprites.forEach(function (sprite) {
+            sprite.on("pointerdown", function (pointer) {
+                if (sprite.id === index) {
+                    sprite.destroy();
+                    index += 1;
+                } else {
+                    sprites.map(sprite => {
+                        sprite.setFrame(`sprite${sprite.id}`);
+                    });
+                    sleep(500).then(() => {
+                        alert('GameOver');
+                    });
+                }
+                
+            
+            });
+            
         });
-    });
     console.log(index);
 }
