@@ -10,7 +10,6 @@ const config = {
     scene: {
         preload,
         create,
-        //update
     },
 };
 
@@ -99,6 +98,11 @@ function create() {
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
+    function gameOver() {
+        this.registry.destroy(); // destroy registry
+        this.events.off();﻿ // disable all active events
+        this.scene.restart();﻿﻿﻿﻿ // restart current scene
+    }
         sprites.forEach(function (sprite) {
             sprite.on("pointerdown", function (pointer) {
                 if (sprite.id ===1) {
@@ -114,10 +118,12 @@ function create() {
                     sprites.map(sprite => {
                         sprite.setFrame(`sprite${sprite.id}`);
                     });
-                    sleep(500).then(() => {
-                        alert('GameOver');
+                    sleep(300).then(() => {
+                        if (!alert('Game Over')) { window.location.reload(); }
                     });
+                                       
                 }
+                
             });
             
         });
