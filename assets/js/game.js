@@ -21,7 +21,11 @@ function preload() {
 }
 
 function create() {
+<<<<<<< HEAD
     // checkUserData();
+=======
+    //checkUserData();
+>>>>>>> b7541f580a5ff35abb1abdda04cd00a705db8ae0
     let sprites = [];
     // array x i array y zapisane w 1 array-u o nazwie coords (tzw nested arrays)
     let coords = [[], []];
