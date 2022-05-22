@@ -84,25 +84,32 @@ function create() {
             .setInteractive();
         // nadaje id dla kazdego sprite-a.
         sprites[step].id = step + 1;
-        this.time.addEvent({
-            delay: 2000,
-            callback: () => {
-                sprites[step].setFrame(`spriteBlank`);
-            },
-        });
+        // this.time.addEvent({
+        //     delay: 2000,
+        //     callback: () => {
+        //         sprites[step].setFrame(`spriteBlank`);
+        //     },
+        // });
         sprites[step].setScale(size);
     }
     // dodawanie click event by odkrywac karty w odpwiedzniej kolejności jak nie to game over
-    let index = 1;
+    let number = 2;
+    let firstClick = true;
     // funkcja opózniajaca dzialanie w JS
     function sleep(ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
     }
         sprites.forEach(function (sprite) {
             sprite.on("pointerdown", function (pointer) {
-                if (sprite.id === index) {
+                if (sprite.id ===1) {
+                    for (let i = 1; i < sprites.length; i++) {
+                        sprites[i].setFrame(`spriteBlank`);
+                        firstClick = false;
+                        sprite.destroy();
+                    }
+                } else if (sprite.id === number) {
                     sprite.destroy();
-                    index += 1;
+                    number += 1;
                 } else {
                     sprites.map(sprite => {
                         sprite.setFrame(`sprite${sprite.id}`);
@@ -111,10 +118,7 @@ function create() {
                         alert('GameOver');
                     });
                 }
-                
-            
             });
             
         });
-    console.log(index);
 }
